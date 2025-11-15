@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Anime Chatbot — Demo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Anime Chatbot — Demo</h1>
+      <div class="top-links">
+        <a href="https://github.com/kbweeb/anime-chatbot-api" target="_blank" rel="noopener">View Code →</a>
+        <a href="https://kbweeb.github.io/" target="_blank" rel="noopener">Back to Portfolio →</a>
+      </div>
+
+      <section class="panel">
+        <label class="row">API Base URL <input id="api" placeholder="https://your-api.example.com" /></label>
+        <label class="row">Message <input id="msg" placeholder="Ask about anime..." /></label>
+        <button id="send">Send</button>
+        <pre id="out" class="out">(No messages yet)</pre>
+      </section>
+
+      <p class="note">Set API to your deployed URL, then send a message. If the API has no OPENAI_API_KEY, it returns a mock reply.</p>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+  </html>
