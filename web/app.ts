@@ -7,6 +7,9 @@ function log(line: string) {
   out.textContent = `${out.textContent ? out.textContent + "\n" : ""}${line}`
 }
 
+// Prefill deploy URL
+apiInput.value = apiInput.value || 'https://anime-chatbot-api.vercel.app'
+
 sendBtn.onclick = async () => {
   const base = apiInput.value.trim()
   const msg = msgInput.value.trim()
