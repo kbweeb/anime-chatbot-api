@@ -1,14 +1,55 @@
 * { box-sizing: border-box; }
-body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #0b0b0f; color: #e6e6ea; }
-.container { max-width: 720px; margin: 24px auto; padding: 16px; }
-h1 { margin: 0 0 16px; font-size: 20px; color: #fff; }
-.top-links { display: flex; gap: 12px; margin-bottom: 10px; }
-.top-links a { color: #fecaca; font-size: 12px; text-decoration: none; }
-.top-links a:hover { color: #fee2e2; }
-.panel { background: #11121a; border: 1px solid #232334; border-radius: 8px; padding: 12px; }
-.row { display: flex; gap: 8px; align-items: center; margin: 6px 0; font-size: 12px; }
-input { flex: 1; padding: 8px; border-radius: 6px; border: 1px solid #2b2b3a; background: #0b0b12; color: #e6e6ea; }
-button { background: #ef4444; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
-button:hover { background: #dc2626; }
-.out { white-space: pre-wrap; font-size: 12px; margin-top: 6px; opacity: 0.9; border: 1px dashed #2b2b3a; padding: 8px; border-radius: 6px; min-height: 60px; }
-.note { font-size: 12px; opacity: 0.8; margin-top: 12px; }
+:root {
+  --bg: #0b0c10;
+  --panel: #11121a;
+  --border: #232334;
+  --text: #e6e6ea;
+  --muted: #a1a1aa;
+  --user: #1f2937;
+  --assistant: #0f172a;
+  --primary: #22c55e;
+  --primary-2: #16a34a;
+}
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  margin: 0; background: var(--bg); color: var(--text);
+}
+
+/* Header */
+.header { position: sticky; top: 0; z-index: 10; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, rgba(11,12,16,0.95), rgba(11,12,16,0.85)); backdrop-filter: blur(6px); }
+.logo { font-weight: 700; letter-spacing: 0.4px; }
+.header__links { display: flex; gap: 12px; margin-left: 16px; }
+.header__links a { color: #cbd5e1; font-size: 12px; text-decoration: none; }
+.header__links a:hover { color: #ffffff; }
+.header__left { display: flex; align-items: center; gap: 12px; }
+.header__right { display: flex; gap: 8px; align-items: center; }
+.api-input { width: 260px; padding: 8px; border-radius: 8px; border: 1px solid var(--border); background: #0b0b12; color: var(--text); }
+.header button { background: var(--primary); color: #041106; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+.header button:hover { background: var(--primary-2); }
+
+/* Chat */
+.chat-root { max-width: 880px; margin: 0 auto; padding: 16px; min-height: calc(100dvh - 56px); display: grid; grid-template-rows: 1fr auto auto; gap: 12px; }
+.chat-thread { display: flex; flex-direction: column; gap: 14px; padding: 8px; border-radius: 12px; }
+.msg { display: grid; grid-template-columns: 36px 1fr; gap: 10px; }
+.msg__avatar { width: 36px; height: 36px; border-radius: 50%; background: #141824; border: 1px solid var(--border); }
+.msg__bubble { border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; line-height: 1.5; font-size: 14px; white-space: pre-wrap; }
+.msg.user .msg__bubble { background: var(--user); }
+.msg.assistant .msg__bubble { background: var(--assistant); }
+.msg.user .msg__avatar { background: #0b1320; }
+.msg.assistant .msg__avatar { background: #0a1a10; }
+
+/* Composer */
+.composer { display: flex; gap: 10px; align-items: flex-end; padding: 10px; border: 1px solid var(--border); background: var(--panel); border-radius: 12px; position: sticky; bottom: 12px; }
+.composer__input { flex: 1; resize: none; max-height: 160px; min-height: 40px; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: #0b0b12; color: var(--text); line-height: 1.5; }
+.composer__actions { display: flex; align-items: center; gap: 8px; }
+.composer__send { background: var(--primary); color: #041106; border: none; padding: 10px 14px; border-radius: 10px; cursor: pointer; font-weight: 700; }
+.composer__send:hover { background: var(--primary-2); }
+.composer__send[disabled] { opacity: 0.6; cursor: not-allowed; }
+
+.hint { text-align: center; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+
+/* Mobile tweaks */
+@media (max-width: 640px) {
+  .api-input { width: 50vw; }
+  .chat-root { padding: 12px; }
+}

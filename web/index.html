@@ -3,26 +3,46 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Anime Chatbot — Demo</title>
+    <title>Anime Chatbot — Chat</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <main class="container">
-      <h1>Anime Chatbot — Demo</h1>
-      <div class="top-links">
-        <a href="https://github.com/kbweeb/anime-chatbot-api" target="_blank" rel="noopener">View Code →</a>
-        <a href="https://kbweeb.github.io/my-portfolio/" target="_blank" rel="noopener">Back to Portfolio →</a>
+    <header class="header">
+      <div class="header__left">
+        <div class="logo">Anime Chatbot</div>
+        <nav class="header__links">
+          <a href="https://github.com/kbweeb/anime-chatbot-api" target="_blank" rel="noopener">View Code</a>
+          <a href="https://kbweeb.github.io/my-portfolio/" target="_blank" rel="noopener">Back to Portfolio</a>
+        </nav>
       </div>
+      <div class="header__right">
+        <input id="api" class="api-input" placeholder="https://your-api.example.com" />
+        <button id="saveApi" title="Save API Base URL">Save</button>
+      </div>
+    </header>
 
-      <section class="panel">
-        <label class="row">API Base URL <input id="api" placeholder="https://your-api.example.com" /></label>
-        <label class="row">Message <input id="msg" placeholder="Ask about anime..." /></label>
-        <button id="send">Send</button>
-        <pre id="out" class="out">(No messages yet)</pre>
+    <main class="chat-root">
+      <section id="messages" class="chat-thread" aria-live="polite" aria-busy="false">
+        <!-- Messages render here -->
       </section>
 
-      <p class="note">Set API to your deployed URL, then send a message. If the API has no OPENAI_API_KEY, it returns a mock reply.</p>
+      <form id="composer" class="composer" autocomplete="off">
+        <textarea id="msg" class="composer__input" rows="1" placeholder="Message Anime Chatbot... (Shift+Enter for newline)"></textarea>
+        <div class="composer__actions">
+          <button id="send" class="composer__send" type="submit">Send</button>
+        </div>
+      </form>
+
+      <div id="hint" class="hint">Press Enter to send • Shift+Enter for newline</div>
     </main>
+
+    <template id="tpl-msg">
+      <div class="msg">
+        <div class="msg__avatar"></div>
+        <div class="msg__bubble"></div>
+      </div>
+    </template>
+
     <script type="module" src="app.js"></script>
   </body>
   </html>
