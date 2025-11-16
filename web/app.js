@@ -77,9 +77,8 @@ els.composer.addEventListener('keydown', (e) => {
 
 els.composer.addEventListener('submit', async (e) => {
   e.preventDefault()
-  const base = (els.api.value.trim() || store.apiBase).replace(/\/$/, '')
+  const baseInput = (els.api.value.trim() || store.apiBase).replace(/\/$/, '')
   const text = els.msg.value.trim()
-  if (!base) return alert('Enter API Base URL')
   if (!text) return
 
   try {
@@ -88,7 +87,8 @@ els.composer.addEventListener('submit', async (e) => {
     els.msg.value = ''
     autoGrow(els.msg)
 
-    const res = await fetch(`${base}/chat`, {
+    const endpoint = baseInput ? `${baseInput}/chat` : '/api/chat'
+    const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: text }),
