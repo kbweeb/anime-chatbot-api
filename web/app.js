@@ -95,7 +95,8 @@ els.composer.addEventListener('submit', async (e) => {
     els.msg.value = ''
     autoGrow(els.msg)
 
-    const endpoint = baseInput ? `${baseInput}/chat` : '/api/chat'
+    const useExternal = baseInput && !isSameOrigin(baseInput)
+    const endpoint = useExternal ? `${baseInput}/chat` : '/api/chat'
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
