@@ -9,7 +9,8 @@ const els = {
 }
 
 const store = {
-  get apiBase() { return localStorage.getItem('apiBase') || 'https://anime-chatbot-api.vercel.app' },
+  // Leave empty by default so we use /api/chat on this Vercel app unless user provides an external base
+  get apiBase() { return localStorage.getItem('apiBase') || '' },
   set apiBase(v) { localStorage.setItem('apiBase', v) },
   get history() { try { return JSON.parse(localStorage.getItem('history')||'[]') } catch { return [] } },
   set history(v) { localStorage.setItem('history', JSON.stringify(v)) },
@@ -52,6 +53,13 @@ function setBusy(b) {
 function autoGrow(textarea) {
   textarea.style.height = 'auto'
   textarea.style.height = Math.min(textarea.scrollHeight, 160) + 'px'
+}
+
+function isSameOrigin(urlStr) {
+  try {
+    const u = new URL(urlStr)
+    return u.origin === window.location.origin
+  } catch { return false }
 }
 
 // Init
