@@ -31,7 +31,7 @@ static async Task HandleChatRequest(HttpContext ctx)
     var apiKey = Environment.GetEnvironmentVariable("AI_API_KEY")
                 ?? Environment.GetEnvironmentVariable("OPENAI_API_KEY");
     var baseUrl = Environment.GetEnvironmentVariable("AI_BASE_URL") ?? "https://api.groq.com/openai/v1";
-    var model = Environment.GetEnvironmentVariable("AI_MODEL") ?? "llama-3.1-70b-versatile";
+    var model = Environment.GetEnvironmentVariable("AI_MODEL") ?? "llama-3.1-8b-instant";
 
     if (string.IsNullOrWhiteSpace(apiKey))
     {
