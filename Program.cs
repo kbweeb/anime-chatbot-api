@@ -4,9 +4,25 @@ using System.Text;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Enable CORS for cross-origin requests
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
-app.MapPost("/chat", async (HttpContext ctx) =>
+// Enable CORS
+app.UseCors("AllowAll");
+
+// Shared chat handler logic
+static async Task HandleChatRequest(HttpContext ctx)
 {
     var body = await JsonSerializer.DeserializeAsync<JsonElement>(ctx.Request.Body);
     var message = body.TryGetProperty("message", out var m) ? m.GetString() ?? string.Empty : string.Empty;
@@ -49,6 +65,10 @@ app.MapPost("/chat", async (HttpContext ctx) =>
     {
         await ctx.Response.WriteAsJsonAsync(new { reply = $"(Error) {ex.Message}" });
     }
-});
+}
+
+// Register both route patterns to handle frontend expectations
+app.MapPost("/chat", HandleChatRequest);        // Original route
+app.MapPost("/api/chat", HandleChatRequest);    // Frontend-expected route
 
 app.Run();
