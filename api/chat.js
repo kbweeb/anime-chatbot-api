@@ -15,7 +15,10 @@ export default async function handler(req, res) {
       return res.status(200).json({ reply: '(Mock) Hello from Anime Chatbot! Set AI_API_KEY on Vercel to enable real replies.' })
     }
 
-    const r = await fetch(new URL('/chat/completions', baseUrl), {
+    // Important: avoid leading slash when joining with baseUrl, or URL(base, "/path")
+    // will drop the "/openai/v1" segment. Build the endpoint manually.
+    const endpoint = `${String(baseUrl || '').replace(/\/$/, '')}/chat/completions`
+    const r = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${apiKey}`,

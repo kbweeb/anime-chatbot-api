@@ -40,7 +40,8 @@ static async Task HandleChatRequest(HttpContext ctx)
         return;
     }
 
-    using var http = new HttpClient { BaseAddress = new Uri(baseUrl) };
+    // Ensure BaseAddress retains the "/openai/v1" path and do not use a leading slash in requests
+    using var http = new HttpClient { BaseAddress = new Uri(baseUrl.EndsWith("/") ? baseUrl : baseUrl + "/") };
     http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
     var payload = new
     {
@@ -53,7 +54,7 @@ static async Task HandleChatRequest(HttpContext ctx)
 
     try
     {
-        var res = await http.PostAsync("/chat/completions", content);
+        var res = await http.PostAsync("chat/completions", content);
         res.EnsureSuccessStatusCode();
         using var stream = await res.Content.ReadAsStreamAsync();
         using var doc = await JsonDocument.ParseAsync(stream);
