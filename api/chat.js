@@ -9,7 +9,7 @@ export default async function handler(req, res) {
 
     const apiKey = process.env.AI_API_KEY || process.env.OPENAI_API_KEY
     const baseUrl = process.env.AI_BASE_URL || 'https://api.groq.com/openai/v1'
-    const model = process.env.AI_MODEL || 'llama-3.1-70b-versatile'
+    const model = process.env.AI_MODEL || 'llama-3.1-8b-instant'
 
     if (!apiKey) {
       return res.status(200).json({ reply: '(Mock) Hello from Anime Chatbot! Set AI_API_KEY on Vercel to enable real replies.' })

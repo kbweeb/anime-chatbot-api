@@ -4,9 +4,25 @@ using System.Text;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Enable CORS for cross-origin requests
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
-app.MapPost("/chat", async (HttpContext ctx) =>
+// Enable CORS
+app.UseCors("AllowAll");
+
+// Shared chat handler logic
+static async Task HandleChatRequest(HttpContext ctx)
 {
     var body = await JsonSerializer.DeserializeAsync<JsonElement>(ctx.Request.Body);
     var message = body.TryGetProperty("message", out var m) ? m.GetString() ?? string.Empty : string.Empty;
@@ -15,7 +31,7 @@ app.MapPost("/chat", async (HttpContext ctx) =>
     var apiKey = Environment.GetEnvironmentVariable("AI_API_KEY")
                 ?? Environment.GetEnvironmentVariable("OPENAI_API_KEY");
     var baseUrl = Environment.GetEnvironmentVariable("AI_BASE_URL") ?? "https://api.groq.com/openai/v1";
-    var model = Environment.GetEnvironmentVariable("AI_MODEL") ?? "llama-3.1-70b-versatile";
+    var model = Environment.GetEnvironmentVariable("AI_MODEL") ?? "llama-3.1-8b-instant";
 
     if (string.IsNullOrWhiteSpace(apiKey))
     {
@@ -49,6 +65,10 @@ app.MapPost("/chat", async (HttpContext ctx) =>
     {
         await ctx.Response.WriteAsJsonAsync(new { reply = $"(Error) {ex.Message}" });
     }
-});
+}
+
+// Register both route patterns to handle frontend expectations
+app.MapPost("/chat", HandleChatRequest);        // Original route
+app.MapPost("/api/chat", HandleChatRequest);    // Frontend-expected route
 
 app.Run();
