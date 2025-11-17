@@ -13,7 +13,6 @@ apiInput.value = apiInput.value || 'https://anime-chatbot-api.vercel.app'
 sendBtn.onclick = async () => {
   const base = apiInput.value.trim()
   const msg = msgInput.value.trim()
-  if (!base) return alert('Enter API Base URL')
   if (!msg) return alert('Type a message')
   try {
     log(`> ${msg}`)
