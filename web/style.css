@@ -49,7 +49,70 @@ body {
 .hint { text-align: center; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
 
 /* Mobile tweaks */
-@media (max-width: 640px) {
-  .api-input { width: 50vw; }
+@media (max-width: 768px) {
+  .header { 
+    flex-direction: column; 
+    gap: 10px; 
+    padding: 12px; 
+  }
+  .header__left { 
+    width: 100%; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 8px; 
+  }
+  .header__right { 
+    width: 100%; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+  }
+  .header__links { 
+    width: 100%; 
+    justify-content: center; 
+    margin-left: 0; 
+    margin-top: 8px; 
+  }
+  .api-input { 
+    width: 100%; 
+    max-width: 100%; 
+  }
   .chat-root { padding: 12px; }
+  .new-chat-btn { 
+    font-size: 12px; 
+    padding: 6px 10px; 
+  }
+  .logo { 
+    font-size: 16px; 
+  }
+  .msg { 
+    grid-template-columns: 28px 1fr; 
+    gap: 8px; 
+  }
+  .msg__avatar { 
+    width: 28px; 
+    height: 28px; 
+  }
+  .msg__bubble { 
+    padding: 10px 12px; 
+    font-size: 13px; 
+  }
+  .composer { 
+    padding: 8px; 
+  }
+  .composer__input { 
+    padding: 10px; 
+    font-size: 14px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .header__links { 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 6px; 
+  }
+  .header button { 
+    padding: 6px 10px; 
+    font-size: 12px; 
+  }
 }
